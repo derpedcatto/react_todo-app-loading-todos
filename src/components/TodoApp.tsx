@@ -10,6 +10,7 @@ type Props = {
   allTodos: Todo[];
   todosLeft: number;
   isAllTodosCompleted: boolean;
+  isHasCompletedTodos: boolean;
   filterStatus: FilterStatus;
   onFilterChange: (status: FilterStatus) => void;
 };
@@ -19,6 +20,7 @@ export const TodoApp: React.FC<Props> = ({
   allTodos,
   todosLeft,
   isAllTodosCompleted,
+  isHasCompletedTodos,
   filterStatus,
   onFilterChange,
 }) => {
@@ -35,6 +37,7 @@ export const TodoApp: React.FC<Props> = ({
 
           <TodoFooter
             todosLeft={todosLeft}
+            isHasCompletedTodos={isHasCompletedTodos}
             filterStatus={filterStatus}
             onFilterChange={onFilterChange}
           />

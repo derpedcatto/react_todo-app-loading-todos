@@ -27,7 +27,6 @@ const prepareTodos = (todos: Todo[], filterStatus: FilterStatus): Todo[] => {
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [errorMessage, setErrorMessage] = useState<ErrorMessage | null>(null);
-  const [loading, setLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState<FilterStatus>(
     FilterStatus.All,
   );
@@ -44,9 +43,12 @@ export const App: React.FC = () => {
     return todos.length > 0 && todos.every(todo => todo.completed);
   }, [todos]);
 
+  const isHasCompletedTodos = useMemo(() => {
+    return todos.some(todo => todo.completed);
+  }, [todos]);
+
   const handleLoadTodos = async () => {
     setErrorMessage(null);
-    setLoading(true);
 
     try {
       const apiTodos = await getTodos();
@@ -54,8 +56,6 @@ export const App: React.FC = () => {
       setTodos(apiTodos);
     } catch (error) {
       setErrorMessage(ErrorMessage.UnableToLoadTodos);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -88,6 +88,7 @@ export const App: React.FC = () => {
         allTodos={todos}
         todosLeft={todosLeft}
         isAllTodosCompleted={isAllTodosCompleted}
+        isHasCompletedTodos={isHasCompletedTodos}
         filterStatus={filterStatus}
         onFilterChange={setFilterStatus}
       />

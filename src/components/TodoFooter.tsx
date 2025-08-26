@@ -3,12 +3,14 @@ import { TodoFilter } from './TodoFilter';
 
 type Props = {
   todosLeft: number;
+  isHasCompletedTodos: boolean;
   filterStatus: FilterStatus;
   onFilterChange: (status: FilterStatus) => void;
 };
 
 export const TodoFooter: React.FC<Props> = ({
   todosLeft,
+  isHasCompletedTodos,
   filterStatus,
   onFilterChange,
 }) => {
@@ -25,6 +27,7 @@ export const TodoFooter: React.FC<Props> = ({
         type="button"
         className="todoapp__clear-completed"
         data-cy="ClearCompletedButton"
+        disabled={!isHasCompletedTodos}
       >
         Clear completed
       </button>
